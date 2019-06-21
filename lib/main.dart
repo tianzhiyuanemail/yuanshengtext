@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:package_hello/package_hello.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -26,10 +28,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static const platform = const MethodChannel('samples.flutter.io/battery');
 
+  int numm = 0;
+
   // Get battery level.
   String _batteryLevel = '还没有调用哦.';
 
-  Future<Null> _getBatteryLevel() async {
+   Future<Null> _getBatteryLevel() async {
     String batteryLevel;
     try {
 //      final int result = await platform.invokeMethod('getBatteryLevel');
@@ -44,6 +48,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Future<Null> _getOtherNum() async {
+
+    int numms =  Calculator().addOne(numm);
+
+    setState(() {
+      numm = numms;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -52,10 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             new RaisedButton(
-              child: new Text('Get Battery Level'),
+              child: new Text('获取系统电量'),
               onPressed: _getBatteryLevel,
             ),
             new Text(_batteryLevel),
+
+            new RaisedButton(
+              child: new Text('获取另外一个包'),
+              onPressed: _getOtherNum,
+            ),
+            new Text(numm.toString()),
           ],
         ),
       ),
